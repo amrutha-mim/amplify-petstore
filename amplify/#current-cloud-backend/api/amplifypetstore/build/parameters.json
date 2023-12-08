@@ -1,0 +1,19 @@
+{
+    "AppSyncApiName": "amplifypetstore",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authamplifypetstore",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "S3DeploymentBucket": "amplify-amplifypetstore-staging-94840-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/25f2a3599cb6f059ba3f31c5c1acfcd00c430cef"
+}

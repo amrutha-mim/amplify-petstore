@@ -1,0 +1,60 @@
+{
+  "identityPoolName": "testAuthIdentityPool",
+  "allowUnauthenticatedIdentities": true,
+  "resourceNameTruncated": "amplifaa904e7f",
+  "userPoolName": "amplifypetstore",
+  "autoVerifiedAttributes": [
+    "email"
+  ],
+  "mfaConfiguration": "OFF",
+  "mfaTypes": [
+    "SMS Text Message"
+  ],
+  "smsAuthenticationMessage": "Your authentication code is {####}",
+  "smsVerificationMessage": "Your verification code is {####}",
+  "emailVerificationSubject": "PetStore App Verification code: {####}",
+  "emailVerificationMessage": "Hey, \nHere's your verification code\n\nVerification code: {####}",
+  "defaultPasswordPolicy": false,
+  "passwordPolicyMinLength": 8,
+  "passwordPolicyCharacters": [
+    "Requires Lowercase"
+  ],
+  "requiredAttributes": [
+    "email",
+    "name",
+    "profile"
+  ],
+  "aliasAttributes": [],
+  "userpoolClientGenerateSecret": false,
+  "userpoolClientRefreshTokenValidity": 30,
+  "userpoolClientWriteAttributes": [],
+  "userpoolClientReadAttributes": [],
+  "userpoolClientLambdaRole": "amplifaa904e7f_userpoolclient_lambda_role",
+  "userpoolClientSetAttributes": false,
+  "sharedId": "aa904e7f",
+  "resourceName": "amplifypetstore",
+  "authSelections": "identityPoolAndUserPool",
+  "serviceName": "Cognito",
+  "useDefault": "manual",
+  "userPoolGroups": false,
+  "userPoolGroupList": [],
+  "adminQueries": false,
+  "thirdPartyAuth": false,
+  "authProviders": [],
+  "usernameCaseSensitive": false,
+  "useEnabledMfas": true,
+  "authRoleArn": {
+    "Fn::GetAtt": [
+      "AuthRole",
+      "Arn"
+    ]
+  },
+  "unauthRoleArn": {
+    "Fn::GetAtt": [
+      "UnauthRole",
+      "Arn"
+    ]
+  },
+  "breakCircularDependency": true,
+  "dependsOn": []
+}

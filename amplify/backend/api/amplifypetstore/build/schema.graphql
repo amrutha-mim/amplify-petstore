@@ -1,0 +1,245 @@
+type Pet @aws_iam @aws_cognito_user_pools @aws_api_key {
+  id: ID!
+  name: String!
+  age: Int
+  breed: String
+  about: String
+  image: String
+  color: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelPetConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [Pet]!
+  nextToken: String
+}
+
+input ModelPetFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  age: ModelIntInput
+  breed: ModelStringInput
+  about: ModelStringInput
+  image: ModelStringInput
+  color: ModelStringInput
+  and: [ModelPetFilterInput]
+  or: [ModelPetFilterInput]
+  not: ModelPetFilterInput
+}
+
+type Query {
+  getPet(id: ID!): Pet @aws_api_key @aws_iam @aws_cognito_user_pools
+  listPets(filter: ModelPetFilterInput, limit: Int, nextToken: String): ModelPetConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+}
+
+input ModelPetConditionInput {
+  name: ModelStringInput
+  age: ModelIntInput
+  breed: ModelStringInput
+  about: ModelStringInput
+  image: ModelStringInput
+  color: ModelStringInput
+  and: [ModelPetConditionInput]
+  or: [ModelPetConditionInput]
+  not: ModelPetConditionInput
+}
+
+input CreatePetInput {
+  id: ID
+  name: String!
+  age: Int
+  breed: String
+  about: String
+  image: String
+  color: String
+}
+
+input UpdatePetInput {
+  id: ID!
+  name: String
+  age: Int
+  breed: String
+  about: String
+  image: String
+  color: String
+}
+
+input DeletePetInput {
+  id: ID!
+}
+
+type Mutation {
+  createPet(input: CreatePetInput!, condition: ModelPetConditionInput): Pet @aws_iam @aws_cognito_user_pools
+  updatePet(input: UpdatePetInput!, condition: ModelPetConditionInput): Pet @aws_iam @aws_cognito_user_pools
+  deletePet(input: DeletePetInput!, condition: ModelPetConditionInput): Pet @aws_iam @aws_cognito_user_pools
+}
+
+input ModelSubscriptionPetFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  age: ModelSubscriptionIntInput
+  breed: ModelSubscriptionStringInput
+  about: ModelSubscriptionStringInput
+  image: ModelSubscriptionStringInput
+  color: ModelSubscriptionStringInput
+  and: [ModelSubscriptionPetFilterInput]
+  or: [ModelSubscriptionPetFilterInput]
+}
+
+type Subscription {
+  onCreatePet(filter: ModelSubscriptionPetFilterInput, owner: String): Pet @aws_subscribe(mutations: ["createPet"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdatePet(filter: ModelSubscriptionPetFilterInput, owner: String): Pet @aws_subscribe(mutations: ["updatePet"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeletePet(filter: ModelSubscriptionPetFilterInput, owner: String): Pet @aws_subscribe(mutations: ["deletePet"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+}
